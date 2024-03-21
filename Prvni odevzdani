@@ -1,0 +1,75 @@
+"""
+projekt_2.py: druhý projekt do Engeto Online Python Akademie
+
+author: Arnošt Križan
+email: KrizanA@seznam.cz
+discord: arnost0782
+"""
+import random
+
+separator = "-" * 47
+
+print("Hi there!")
+print(separator)
+print("I've generated a random 4 digit number for you. \nLet's play a bulls and cows game.")
+print(separator)
+
+while True:
+    number1 = random.randint(1, 9)
+    number2 = random.randint(0, 9)
+    number3 = random.randint(0, 9)
+    number4 = random.randint(0, 9)
+    random_number = str(number1) + str(number2) + str(number3) + str(number4)
+    if len(set(random_number)) == 4:
+        break
+
+def user_entry():
+    """
+    Validation of user_entry to a game.
+    """
+    print(separator)
+    while True:
+        user_input = input(f"Enter a number:\n{separator}\n>>> ")
+        if not user_input.isdigit():
+            print("Input must be a number")
+            continue
+        elif len(user_input) != 4:
+            print("Insert 4 numbers!")
+            continue
+        elif user_input[0] == '0':
+            print("First number must not be 0!")
+            continue
+        elif len(set(user_input)) != len(user_input):
+            print("Each number must be unique")
+            continue
+        break
+    return user_input
+
+def plural(var):
+    """
+    Adjust word of cow and bull to a singular or a plural.
+    """
+    if var == 0:
+        return "s"
+    elif var == 1:
+        return ""
+    else:
+        return "s"
+
+round = 0
+
+while True:
+    round += 1
+    user_input = user_entry()
+    bulls = 0
+    cows = 0
+    for i in range(4):
+        if user_input[i] == random_number[i]:
+            bulls += 1
+        elif user_input[i] in random_number and user_input[i] != random_number[i]:
+            cows += 1
+    if bulls == 4:
+        print(f"Correct, you've guessed the right number"
+              f" in {round} guess{'es' if round != 1 else ''}!")
+        break
+    print(f"{bulls} {'bull' + plural(bulls)}, {cows} {'cow' + plural(cows)}")
